@@ -15,12 +15,6 @@ import static com.codeborne.selenide.Selenide.$$;
 
 class RegistrationTest {
 
-    @BeforeAll
-    static void setup() {
-        Configuration.headless = true;
-        Configuration.browser = "chrome";
-    }
-
 public String generateDate (int days, String pattern) {
 return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern(pattern));
 }
