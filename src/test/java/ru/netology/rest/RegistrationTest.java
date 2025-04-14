@@ -1,9 +1,7 @@
 package ru.netology.rest;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selectors;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
@@ -16,6 +14,12 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 class RegistrationTest {
+
+    @BeforeAll
+    static void setup() {
+        Configuration.headless = true;
+        Configuration.browser = "chrome";
+    }
 
 public String generateDate (int days, String pattern) {
 return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern(pattern));
