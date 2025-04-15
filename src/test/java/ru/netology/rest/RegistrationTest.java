@@ -15,9 +15,9 @@ import static com.codeborne.selenide.Selenide.$$;
 
 class RegistrationTest {
 
-public String generateDate (int days, String pattern) {
-return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern(pattern));
-}
+    public String generateDate(int days, String pattern) {
+        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern(pattern));
+    }
 
 
     @Test
@@ -50,11 +50,10 @@ return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern(pattern
         $("[data-test-id='agreement']").click();
 
         //Кнопка
-        $("button[type='button']").click();
+        $("button.button_view_extra").click();
 
         //Проверка успешной отправки
-        $("[data-test-id='notification']").shouldBe(visible, Duration.ofSeconds(15));
-        $("[data-test-id='notification'] .notification__title")
-                .shouldHave(exactText("Успешно!"));
+        $(Selectors.withText("Успешно!"))
+                .should(visible, Duration.ofSeconds(15));
     }
 }
