@@ -52,8 +52,8 @@ class RegistrationTest {
         $("button.button_view_extra").click();
 
         //Проверка успешной отправки
-        $(Selectors.withText("Успешно!"))
-                .should(visible, Duration.ofSeconds(15));
+        $(".notification__content").should(visible, Duration.ofSeconds(15))
+                .should(Condition.text("Встреча успешно забронирована на " + planningDate));
     }
 
     @Test
@@ -61,17 +61,19 @@ class RegistrationTest {
         Selenide.open("http://localhost:9999");
 
         //Поле "Город"
-        $("[data-test-id='city'] input").setValue("Сал");
+        $("[data-test-id='city'] input").setValue("Са");
         $$(".menu-item__control").findBy(text("Салехард")).click();
         $("[data-test-id='city'] .input__control")
                 .shouldHave(value("Салехард"));
 
         //Поле "Дата встречи"
-        $("[data-test-id='date'] input").click();
         String planningDate = generateDate(7, "dd.MM.yyyy");
-        String day = generateDate(7, "d");
-        $$(".calendar__day").findBy(text(day)).click();
-        $("[data-test-id='date'] input").shouldHave(value(planningDate));
+        $("[data-test-id='date'] input").click();
+        if (!generateDate(4, "MM")
+                .equals(generateDate(7, "MM"))) $(".calendar-input__native-control")
+                .click(); //Селектор стрелочки смены месяца
+        $$(".calendar__day")
+                .findBy(Condition.exactText(generateDate(7, "d"))).click();
 
         //Поле "Фамилия и имя"
         $("[data-test-id='name'] input").setValue("Синицин Евгений");
@@ -90,7 +92,7 @@ class RegistrationTest {
         $("button.button_view_extra").click();
 
         //Проверка успешной отправки
-        $(Selectors.withText("Успешно!"))
-                .should(visible, Duration.ofSeconds(15));
+        $(".notification__content").should(visible, Duration.ofSeconds(15))
+                .should(Condition.text("Встреча успешно забронирована на " + planningDate));
     }
 }
